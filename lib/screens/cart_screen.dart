@@ -33,7 +33,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   Chip(
                     label: Text(
-                      '₹${cart.totalAmount.toStringAsFixed(5)}',
+                      '₹${cart.totalAmount.toStringAsFixed(3)}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context)
@@ -45,7 +45,10 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(cart.items.values.toList(), cart.totalAmount);
+                      cart.clear();
+                    },
                     child: Text(
                       'ORDER NOW',
                       style: TextStyle(
