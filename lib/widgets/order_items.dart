@@ -35,39 +35,42 @@ class _OrderItemsState extends State<OrderItems> {
               },
             ),
           ),
-          if (_expanded)
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 4,
-              ),
-              height: min(widget.order.products.length * 20 + 10, 100),
-              child: ListView(
-                children: widget.order.products
-                    .map(
-                      (prod) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            prod.title,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '${prod.quantity}x ₹${prod.price}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
-              ),
+          // if (_expanded)
+          AnimatedContainer(
+            duration: Duration(milliseconds: 400),
+            padding: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 4,
             ),
+            height: _expanded
+                ? min(widget.order.products.length * 20 + 10, 100)
+                : 5,
+            child: ListView(
+              children: widget.order.products
+                  .map(
+                    (prod) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          prod.title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '${prod.quantity}x ₹${prod.price}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );

@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         title: 'Shop App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          // useMaterial3: true,
+          useMaterial3: true,
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: Colors.purple,
           ).copyWith(
