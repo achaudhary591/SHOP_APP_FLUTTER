@@ -37,7 +37,7 @@ class _OrderItemsState extends State<OrderItems> {
           ),
           // if (_expanded)
           AnimatedContainer(
-            duration: Duration(milliseconds: 400),
+            duration: Duration(milliseconds: 250),
             padding: EdgeInsets.symmetric(
               horizontal: 15,
               vertical: 4,
