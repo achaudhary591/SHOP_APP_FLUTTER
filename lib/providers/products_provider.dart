@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 
 class ProductsProvider with ChangeNotifier {
-  List<Product> _items = [
+  final List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -85,9 +85,91 @@ class ProductsProvider with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/8/8d/Dutch_Oven_-McClures_Magazine.jpg',
     ),
+    Product(
+      id: 'p11',
+      title: 'Toaster Oven',
+      description: 'Toast, bake, and broil with ease in a compact design.',
+      price: 59.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/1/16/Toaster_oven.jpg',
+    ),
+    Product(
+      id: 'p12',
+      title: 'Air Fryer',
+      description: 'Fry foods with little to no oil for a healthier option.',
+      price: 79.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Airfryer.jpg/220px-Airfryer.jpg',
+    ),
+    Product(
+      id: 'p13',
+      title: 'Slow Cooker',
+      description: 'Cook meals slowly and evenly for a delicious result.',
+      price: 69.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Oval_Crock_Pot2.jpg/220px-Oval_Crock_Pot2.jpg',
+    ),
+    Product(
+      id: 'p14',
+      title: 'Electric Griddle',
+      description:
+          'Cook breakfast favorites like pancakes, eggs, and bacon with ease.',
+      price: 49.99,
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Electric_griddle.jpg/800px-Electric_griddle.jpg?20080217090908',
+    ),
+    Product(
+      id: 'p15',
+      title: 'Handheld Milk  Frother',
+      description: 'Create frothy milk for coffee, tea, and other beverages.',
+      price: 19.99,
+      imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Melkklopper.jpg/200px-Melkklopper.jpg',
+    ),
+    Product(
+      id: 'p16',
+      title: 'Waffle Maker',
+      description: 'Make crispy waffles with non-stick plates and adjustable settings.',
+      price: 39.99,
+      imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG/250px-Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG',
+    ),
+    Product(
+      id: 'p17',
+      title: 'Citrus Juicer',
+      description: 'Extract juice from citrus fruits with minimal effort.',
+      price: 24.99,
+      imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Depression_Glass_Juicer.jpg/230px-Depression_Glass_Juicer.jpg',
+    ),
+    Product(
+      id: 'p18',
+      title: 'Electric Grill',
+      description: 'Grill indoors with adjustable temperature and non-stick surface.',
+      price: 89.99,
+      imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Carne_asada_chorizo.jpg/220px-Carne_asada_chorizo.jpg',
+    ),
+    Product(
+      id: 'p19',
+      title: 'Food Dehydrator',
+      description: 'Make homemade dried fruit, jerky, and more.',
+      price: 79.99,
+      imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Food_dehydrator.jpg/220px-Food_dehydrator.jpg',
+    ),
+
+    Product(
+      id: 'p20',
+      title: 'Electric Can Opener',
+      description: 'Open cans with ease and precision.',
+      price: 19.99,
+      imageUrl:
+      'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
+    ),
   ];
 
-  var _showFavouritesOnly = false;
+  final _showFavouritesOnly = false;
 
   List<Product> get favouriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();

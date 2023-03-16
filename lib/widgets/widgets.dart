@@ -4,3 +4,4 @@ export 'badge_icon.dart';
 export 'cart_items.dart';
 export 'order_items.dart';
 export 'app_drawer.dart';
+export 'user_product_item.dart';
