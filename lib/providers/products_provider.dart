@@ -124,15 +124,16 @@ class ProductsProvider with ChangeNotifier {
       description: 'Create frothy milk for coffee, tea, and other beverages.',
       price: 19.99,
       imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Melkklopper.jpg/200px-Melkklopper.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Melkklopper.jpg/200px-Melkklopper.jpg',
     ),
     Product(
       id: 'p16',
       title: 'Waffle Maker',
-      description: 'Make crispy waffles with non-stick plates and adjustable settings.',
+      description:
+          'Make crispy waffles with non-stick plates and adjustable settings.',
       price: 39.99,
       imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG/250px-Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG/250px-Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG',
     ),
     Product(
       id: 'p17',
@@ -140,15 +141,16 @@ class ProductsProvider with ChangeNotifier {
       description: 'Extract juice from citrus fruits with minimal effort.',
       price: 24.99,
       imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Depression_Glass_Juicer.jpg/230px-Depression_Glass_Juicer.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Depression_Glass_Juicer.jpg/230px-Depression_Glass_Juicer.jpg',
     ),
     Product(
       id: 'p18',
       title: 'Electric Grill',
-      description: 'Grill indoors with adjustable temperature and non-stick surface.',
+      description:
+          'Grill indoors with adjustable temperature and non-stick surface.',
       price: 89.99,
       imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Carne_asada_chorizo.jpg/220px-Carne_asada_chorizo.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Carne_asada_chorizo.jpg/220px-Carne_asada_chorizo.jpg',
     ),
     Product(
       id: 'p19',
@@ -156,16 +158,15 @@ class ProductsProvider with ChangeNotifier {
       description: 'Make homemade dried fruit, jerky, and more.',
       price: 79.99,
       imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Food_dehydrator.jpg/220px-Food_dehydrator.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Food_dehydrator.jpg/220px-Food_dehydrator.jpg',
     ),
-
     Product(
       id: 'p20',
       title: 'Electric Can Opener',
       description: 'Open cans with ease and precision.',
       price: 19.99,
       imageUrl:
-      'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
+          'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
     ),
   ];
 
@@ -196,8 +197,27 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct() {
-    // _items.add(value);
+  void addProduct(Product product) {
+    final newProduct = Product(
+      id: DateTime.now().toString(),
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
+    _items.add(newProduct);
+    // _items.insert(0, newProduct);
     notifyListeners();
+  }
+
+  void updateProduct(String id, Product newProduct){
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    if(prodIndex >= 0){
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    }
+    else{
+      print('.....');
+    }
   }
 }

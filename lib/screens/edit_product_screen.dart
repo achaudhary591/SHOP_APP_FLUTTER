@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -20,12 +21,40 @@ class _EditProductScreenState extends State<EditProductScreen> {
     price: 0,
     imageUrl: '',
   );
+  var _isInit = true;
+  var _initValues = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
 
   @override
   void initState() {
     // TODO: implement initState
     _imageUrlFocusNode.addListener(_updateImageUrl);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if(_isInit){
+      final productId = ModalRoute.of(context)?.settings.arguments as String;
+      if(productId != null){
+        _editedProduct = Provider.of<ProductsProvider>(context, listen: false)
+            .findById(productId);
+        _initValues = {
+          'title': _editedProduct.title,
+          'description': _editedProduct.description,
+          'price': _editedProduct.price.toString(),
+          'imageUrl': '',
+        };
+        _imageUrlController.text = _editedProduct.imageUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -45,11 +74,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    final isValid = _form.currentState?.validate();
+    if(!isValid!){
+      return;
+    }
     _form.currentState?.save();
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.imageUrl);
-    print(_editedProduct.price);
+    if(_editedProduct.id != null){
+      Provider.of<ProductsProvider>(context, listen: false).updateProduct(_editedProduct.id, _editedProduct);
+    }else{
+      Provider.of<ProductsProvider>(context, listen: false).addProduct(_editedProduct);
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -70,16 +105,23 @@ class _EditProductScreenState extends State<EditProductScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _form,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          // autovalidateMode: AutovalidateMode.always,
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _initValues['title'],
                 decoration: const InputDecoration(
                   labelText: 'Title',
                 ),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
+                },
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return 'Please enter a title!';
+                  }
+                  return null;
                 },
                 onSaved: (value) {
                   _editedProduct = Product(
@@ -88,16 +130,30 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     description: _editedProduct.description,
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
               ),
               TextFormField(
+                initialValue: _initValues['price'],
                 decoration: const InputDecoration(
                   labelText: 'Price',
                 ),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 focusNode: _priceFocusNode,
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return 'Please enter a Price.';
+                  }
+                  if(double.tryParse(value) == null){
+                    return 'Please enter a valid number.';
+                  }
+                  if(double.parse(value) == 0){
+                    return 'Please enter correct price which is greater than zero.';
+                  }
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
@@ -105,15 +161,26 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     description: _editedProduct.description,
                     price: double.parse(value!),
                     imageUrl: _editedProduct.imageUrl,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
               ),
               TextFormField(
+                initialValue: _initValues['description'],
                 decoration: const InputDecoration(
                   labelText: 'Description',
                 ),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return 'Please enter a description.';
+;                  }
+                  /*if(value.length > ){
+                    return 'Please enter a description of atleast 5 characters';
+                  }*/
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     id: _editedProduct.id,
@@ -121,6 +188,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     description: value!,
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
               ),
@@ -160,6 +228,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       keyboardType: TextInputType.url,
                       controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return 'Please enter an image URL';
+                        }
+                        if(!value.startsWith('http') && !value.startsWith('https')){
+                          return 'Please enter a valid URL.';
+                        }
+                        if(!value.endsWith('.png') && !value.endsWith('.jpeg') && !value.endsWith('.jpg')){
+                          return 'Please enter valid image URL';
+                        }
+                        return null;
+                      },
                       onFieldSubmitted: (_) {
                         _saveForm();
                       },
@@ -170,6 +250,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           price: _editedProduct.price,
                           imageUrl: value!,
+                          isFavorite: _editedProduct.isFavorite,
                         );
                       },
                     ),
