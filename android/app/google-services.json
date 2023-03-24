@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "835800357564",
+    "project_id": "shop-app-7658c",
+    "storage_bucket": "shop-app-7658c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835800357564:android:039cab33bed8b852a48eb9",
+        "android_client_info": {
+          "package_name": "com.akshya.shop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835800357564-g2h327h6l0gat77n32j8i0m6ev6tstkp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMi1YfFSnnzr6hfrOx3ARaiDgcBWFBBtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835800357564-g2h327h6l0gat77n32j8i0m6ev6tstkp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "835800357564-7apa5i4s674l4r8q74b73tkm4ocsd0sc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akshya.shopApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
