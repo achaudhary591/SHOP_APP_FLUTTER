@@ -201,7 +201,7 @@ class ProductsProvider with ChangeNotifier {
 
   Future<void> addProduct(Product product) {
     const url =
-        'https://shop-app-7658c-default-rtdb.firebaseio.com/products.json';
+        'https://shop-app-7658c-default-rtdb.firebaseio.com/products';
     return http
         .post(
       Uri.parse(url),
@@ -227,6 +227,7 @@ class ProductsProvider with ChangeNotifier {
       print(json.decode(response.body)['name']);
     }).catchError((error){
       print(error.message);
+      throw error;
     });
   }
 
