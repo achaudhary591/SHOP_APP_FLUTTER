@@ -1,6 +1,6 @@
 name: shop_app
 description: example for state management using shop app
-# The following line prevents the package from being accidentally published to
+# The following lines prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
