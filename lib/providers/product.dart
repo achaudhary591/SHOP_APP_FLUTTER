@@ -19,6 +19,11 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
+  void _setFavValue(bool newValue){
+    isFavorite = newValue;
+    notifyListeners();
+  }
+
   Future<void> toggleFavouriteStatus() async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
@@ -26,7 +31,7 @@ class Product with ChangeNotifier {
     final url =
         'https://shop-app-7658c-default-rtdb.firebaseio.com/products/$id.json';
     try {
-      await http.patch(
+      final response  = await http.patch(
         Uri.parse(url),
         body: json.encode(
           {
@@ -34,8 +39,11 @@ class Product with ChangeNotifier {
           },
         ),
       );
+      if(response.statusCode >= 400){
+        _setFavValue(oldStatus);
+      }
     }catch(error) {
-      isFavorite = oldStatus;
+      _setFavValue(oldStatus);
     }
   }
 }
