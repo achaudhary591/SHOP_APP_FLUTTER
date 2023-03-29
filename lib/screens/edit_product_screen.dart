@@ -15,6 +15,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
+  ProductsProvider prd = ProductsProvider();
   var _editedProduct = Product(
     id: null,
     title: '',
@@ -130,6 +131,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
           'Edit Product',
         ),
         actions: [
+          IconButton(
+            onPressed: (){
+              // prd.addList();
+            },
+            icon: const Icon(Icons.playlist_add),
+          ),
           IconButton(
             onPressed: _saveForm,
             icon: const Icon(Icons.save_outlined),

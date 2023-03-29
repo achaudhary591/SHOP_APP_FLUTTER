@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop_app/providers/product.dart';
 import 'dart:convert';
 import '../models/models.dart';
 
 class ProductsProvider with ChangeNotifier {
-   List<Product> _items = [
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -12,6 +13,7 @@ class ProductsProvider with ChangeNotifier {
       price: 29.99,
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p2',
@@ -20,6 +22,7 @@ class ProductsProvider with ChangeNotifier {
       price: 59.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p3',
@@ -28,6 +31,7 @@ class ProductsProvider with ChangeNotifier {
       price: 19.99,
       imageUrl:
           'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p4',
@@ -36,6 +40,7 @@ class ProductsProvider with ChangeNotifier {
       price: 49.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p5',
@@ -44,6 +49,7 @@ class ProductsProvider with ChangeNotifier {
       price: 79.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Victorinox_Fibrox_5.2063.20_chef%27s_knife.jpg/220px-Victorinox_Fibrox_5.2063.20_chef%27s_knife.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p6',
@@ -52,6 +58,7 @@ class ProductsProvider with ChangeNotifier {
       price: 29.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Philips_Kettle.jpg/220px-Philips_Kettle.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p7',
@@ -60,6 +67,7 @@ class ProductsProvider with ChangeNotifier {
       price: 59.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Coffee_grinder_-_Credit_to_http_homedust.com_%2828217902047%29.jpg/800px-Coffee_grinder_-_Credit_to_http_homedust.com_%2828217902047%29.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p8',
@@ -68,6 +76,7 @@ class ProductsProvider with ChangeNotifier {
       price: 39.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Wand_Blender.jpg/130px-Wand_Blender.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p9',
@@ -77,6 +86,7 @@ class ProductsProvider with ChangeNotifier {
       price: 99.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Instant_Pot_%2849907000991%29.jpg/220px-Instant_Pot_%2849907000991%29.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p10',
@@ -86,6 +96,7 @@ class ProductsProvider with ChangeNotifier {
       price: 69.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/8/8d/Dutch_Oven_-McClures_Magazine.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p11',
@@ -94,6 +105,7 @@ class ProductsProvider with ChangeNotifier {
       price: 59.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/1/16/Toaster_oven.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p12',
@@ -102,6 +114,7 @@ class ProductsProvider with ChangeNotifier {
       price: 79.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Airfryer.jpg/220px-Airfryer.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p13',
@@ -110,6 +123,7 @@ class ProductsProvider with ChangeNotifier {
       price: 69.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Oval_Crock_Pot2.jpg/220px-Oval_Crock_Pot2.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p14',
@@ -119,6 +133,7 @@ class ProductsProvider with ChangeNotifier {
       price: 49.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Electric_griddle.jpg/800px-Electric_griddle.jpg?20080217090908',
+      isFavorite: false,
     ),
     Product(
       id: 'p15',
@@ -127,6 +142,7 @@ class ProductsProvider with ChangeNotifier {
       price: 19.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Melkklopper.jpg/200px-Melkklopper.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p16',
@@ -136,6 +152,7 @@ class ProductsProvider with ChangeNotifier {
       price: 39.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG/250px-Belgian_waffles_cooked_in_a_Krampouz_cast-iron_waffle_iron.JPG',
+      isFavorite: false,
     ),
     Product(
       id: 'p17',
@@ -144,6 +161,7 @@ class ProductsProvider with ChangeNotifier {
       price: 24.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Depression_Glass_Juicer.jpg/230px-Depression_Glass_Juicer.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p18',
@@ -153,6 +171,7 @@ class ProductsProvider with ChangeNotifier {
       price: 89.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Carne_asada_chorizo.jpg/220px-Carne_asada_chorizo.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p19',
@@ -161,6 +180,7 @@ class ProductsProvider with ChangeNotifier {
       price: 79.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Food_dehydrator.jpg/220px-Food_dehydrator.jpg',
+      isFavorite: false,
     ),
     Product(
       id: 'p20',
@@ -169,6 +189,7 @@ class ProductsProvider with ChangeNotifier {
       price: 19.99,
       imageUrl:
           'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
+      isFavorite: false,
     ),
   ];
 
@@ -193,7 +214,7 @@ class ProductsProvider with ChangeNotifier {
             description: prodData['description'],
             price: prodData['price'],
             imageUrl: prodData['imageUrl'],
-            isFavorite: prodData['isFavorite'],
+            isFavorite: prodData['isFavourite'],
           ),
         );
       });
@@ -226,6 +247,12 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
+  Future<void> addList() async {
+    for (Product prod in _items) {
+      addProduct(prod);
+    }
+  }
+
   Future<void> addProduct(Product product) async {
     const url =
         'https://shop-app-7658c-default-rtdb.firebaseio.com/products.json';
@@ -256,9 +283,22 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      final url =
+          'https://shop-app-7658c-default-rtdb.firebaseio.com/products/$id.json';
+      await http.patch(
+        Uri.parse(url),
+        body: json.encode(
+          {
+            'title': newProduct.title,
+            'description': newProduct.description,
+            'imageUrl': newProduct.imageUrl,
+            'price': newProduct.price,
+          },
+        ),
+      );
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
@@ -266,8 +306,18 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
-    _items.removeWhere((prod) => prod.id == id);
+  Future<void> deleteProduct(String id) async {
+    final url =
+        'https://shop-app-7658c-default-rtdb.firebaseio.com/products/$id.json';
+    final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
+    Product? existingProduct = _items[existingProductIndex];
+    _items.removeAt(existingProductIndex);
     notifyListeners();
+    final response = await http.delete(Uri.parse(url));
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+      throw HttpException('Could not delete product!');
+    }
+    existingProduct = null;
   }
 }
