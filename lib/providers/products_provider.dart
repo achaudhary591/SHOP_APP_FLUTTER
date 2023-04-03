@@ -6,7 +6,7 @@ import '../models/models.dart';
 
 class ProductsProvider with ChangeNotifier {
   List<Product> _items = [
-    Product(
+    /*Product(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -190,24 +190,27 @@ class ProductsProvider with ChangeNotifier {
       imageUrl:
           'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
       isFavorite: false,
-    ),
+    ),*/
   ];
 
   final _showFavouritesOnly = false;
+
+  final String? authToken;
+
+  ProductsProvider(this.authToken, this._items);
 
   List<Product> get favouriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url =
-        'https://shop-app-7658c-default-rtdb.firebaseio.com/products.json';
+    final url =
+        'https://shop-app-7658c-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
-        // print("===========================>"+prodData['title']);
         loadedProducts.add(
           Product(
             id: prodId,
