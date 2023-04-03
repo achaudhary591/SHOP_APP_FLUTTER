@@ -13,10 +13,9 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-
   late Future _ordersFuture;
 
-  Future _obtainOrdersFuture(){
+  Future _obtainOrdersFuture() {
     return Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
   }
 
@@ -42,19 +41,24 @@ class _OrdersScreenState extends State<OrdersScreen> {
               child: CircularProgressIndicator(),
             );
           } else {
-            if (dataSnapshot.error != null) {
-              print("=====================> ${dataSnapshot.error}");
+            if (dataSnapshot.error != null && dataSnapshot.hasData == true) {
               return const Center(
                 child: Text('An error occurred!'),
               );
-            } else {
+            }
+            else if(dataSnapshot.data == false){
+              return const Center(
+                child: Text('Add some orders'),
+              );
+            }
+            else {
               return Consumer<Orders>(
                 builder: (ctx, orderData, child) => ListView.builder(
-                  itemCount: orderData.orders.length,
-                  itemBuilder: (ctx, i) => OrderItems(
-                    orderData.orders[i],
-                  ),
-                ),
+                        itemCount: orderData.orders.length,
+                        itemBuilder: (ctx, i) => OrderItems(
+                          orderData.orders[i],
+                        ),
+                      ),
               );
             }
           }
