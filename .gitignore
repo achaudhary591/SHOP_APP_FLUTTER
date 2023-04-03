@@ -38,8 +38,8 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
+# Android Studio will place build artifactss here
 /android/app/debug
 /android/app/profile
 /android/app/release
-/lib/models/api_key.dart
+./lib/models/api_key.dart
