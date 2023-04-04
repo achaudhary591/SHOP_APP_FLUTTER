@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/screens/edit_product_screen.dart';
 import '../providers/providers.dart';
@@ -32,8 +33,11 @@ class UsersProductsScreen extends StatelessWidget {
         future: _refreshProducts(context),
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
-                ? const Center(
-                    child: CircularProgressIndicator(),
+                ? Center(
+                    child: LoadingAnimationWidget.dotsTriangle(
+                      color: Colors.orange,
+                      size: 100,
+                    ),
                   )
                 : RefreshIndicator(
                     onRefresh: () => _refreshProducts(context),

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'dart:ui';
 import 'package:provider/provider.dart';
 import '../models/models.dart';
@@ -250,7 +251,12 @@ class _AuthCardState extends State<AuthCard> {
                   height: 20,
                 ),
                 if (_isLoading)
-                  const CircularProgressIndicator()
+                  Center(
+                    child: LoadingAnimationWidget.dotsTriangle(
+                      color: Colors.orange,
+                      size: 100,
+                    ),
+                  )
                 else
                   ElevatedButton(
                     onPressed: _submit,

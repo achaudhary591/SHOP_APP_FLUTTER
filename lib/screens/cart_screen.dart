@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
@@ -11,24 +12,24 @@ class CartScreen extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Cart'),
+        title: const Text('Your Cart'),
       ),
       body: Column(
         children: [
           Card(
-            margin: EdgeInsets.all(15),
+            margin: const EdgeInsets.all(15),
             child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Total',
                     style: TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Chip(
@@ -49,7 +50,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
@@ -99,8 +100,13 @@ class _OrderButtonState extends State<OrderButton> {
               widget.cart.clear();
             },
       child: _isLoading
-          ? CircularProgressIndicator()
-          : Text(
+          ? Center(
+              child: LoadingAnimationWidget.dotsTriangle(
+                color: Colors.orange,
+                size: 30,
+              ),
+            )
+          : const Text(
               'ORDER NOW',
               /*style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,

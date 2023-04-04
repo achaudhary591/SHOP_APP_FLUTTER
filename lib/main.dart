@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'providers/providers.dart';
 import 'screens/screens.dart';
 
@@ -19,19 +21,24 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, ProductsProvider>(
-          create: (ctx) => ProductsProvider(null, null,  []),
-          update: (ctx, auth, previousProducts) => ProductsProvider(
-            auth.token,
-            auth.userId,
-            previousProducts == null ? [] : previousProducts.items,
-          ),
+          create: (_) => ProductsProvider('', '', []),
+          update: (ctx, auth, previousProductsProvider) =>
+              previousProductsProvider!
+                ..updateUser(
+                  auth.token!,
+                  auth.userId!,
+                ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
-          create: (ctx) => Orders(null, null,[]),
-          update: (ctx, auth, previousOrders) => Orders(auth.token, auth.userId, previousOrders == null ? [] : previousOrders.orders),
+          create: (_) => Orders('', '', []),
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            auth.userId,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
         ),
       ],
       child: Consumer<Auth>(
@@ -47,7 +54,21 @@ class MyApp extends StatelessWidget {
             ),
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? Center(
+                              child: LoadingAnimationWidget.dotsTriangle(
+                                color: Colors.orange,
+                                size: 100,
+                              ),
+                            )
+                          : AuthScreen(),
+                ),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),

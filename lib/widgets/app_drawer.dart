@@ -17,7 +17,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Hello Friend'),
             automaticallyImplyLeading: false,
           ),
-          const Divider(),
+          // const Divider(),
           ListTile(
             leading: const Icon(Icons.shop),
             title: const Text('Shop'),
@@ -60,11 +60,19 @@ class AppDrawer extends StatelessWidget {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                   ),
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.exit_to_app),
+                      SizedBox(width: 10,),
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
+                      ),
+                    ],
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();

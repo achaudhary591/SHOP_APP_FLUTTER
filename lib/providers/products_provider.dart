@@ -6,7 +6,7 @@ import '../models/models.dart';
 
 class ProductsProvider with ChangeNotifier {
   List<Product> _items = [
-    Product(
+    /*Product(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -190,12 +190,12 @@ class ProductsProvider with ChangeNotifier {
       imageUrl:
           'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
       isFavorite: false,
-    ),
+    ),*/
   ];
 
   final _showFavouritesOnly = false;
-  final String? userId;
-  final String? authToken;
+  String? userId;
+  String? authToken;
 
   ProductsProvider(this.authToken, this.userId, this._items);
 
@@ -203,8 +203,15 @@ class ProductsProvider with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
+  void updateUser(String token, String id) {
+    userId = id;
+    authToken = token;
+    notifyListeners();
+  }
+
   Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
-    final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
         'https://shop-app-7658c-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString';
 
@@ -215,24 +222,29 @@ class ProductsProvider with ChangeNotifier {
         return;
       }
       url =
-      'https://shop-app-7658c-default-rtdb.firebaseio.com/userFavourites/$userId.json?auth=$authToken';
+          'https://shop-app-7658c-default-rtdb.firebaseio.com/userFavourites/$userId.json?auth=$authToken';
       final favouriteResponse = await http.get(Uri.parse(url));
       final favouriteData = json.decode(favouriteResponse.body);
       final List<Product> loadedProducts = [];
-      extractedData.forEach((prodId, prodData) {
-        loadedProducts.add(Product(
-          id: prodId,
-          title: prodData['title'],
-          description: prodData['description'],
-          price: prodData['price'],
-          imageUrl: prodData['imageUrl'],
-          isFavorite: favouriteData == null ? false : favouriteData[prodId] ??
-              false,
-        ));
-      });
+      extractedData.forEach(
+        (prodId, prodData) {
+          loadedProducts.add(
+            Product(
+              id: prodId,
+              title: prodData['title'],
+              description: prodData['description'],
+              price: prodData['price'],
+              imageUrl: prodData['imageUrl'],
+              isFavorite: favouriteData == null
+                  ? false
+                  : favouriteData[prodId] ?? false,
+            ),
+          );
+        },
+      );
       _items = loadedProducts;
       notifyListeners();
-    } on Exception catch(error){
+    } on Exception catch (error) {
       rethrow;
     }
   }
