@@ -46,7 +46,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Shop'),
+        title: const Text('My Shop'),
         actions: [
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
@@ -59,24 +59,24 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               });
             },
             itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text('Only Favourites'),
+              const PopupMenuItem(
                 value: FilterOptions.Favourites,
+                child: Text('Only Favourites'),
               ),
-              PopupMenuItem(
-                child: Text('Show All'),
+              const PopupMenuItem(
                 value: FilterOptions.All,
+                child: Text('Show All'),
               ),
             ],
             icon: const Icon(Icons.more_vert),
           ),
           Consumer<Cart>(
             builder: (_, cart, ch) => BadgeIcon(
-              child: ch!,
               value: cart.itemCount.toString(),
+              child: ch!,
             ),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart,
               ),
               onPressed: () {
@@ -86,9 +86,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           ),
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ProductsGrid(showFavouritesOnly),

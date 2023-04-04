@@ -14,6 +14,7 @@ class OrderItems extends StatefulWidget {
 
 class _OrderItemsState extends State<OrderItems> {
   var _expanded = false;
+  final rowHeight = 30.0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,40 +36,34 @@ class _OrderItemsState extends State<OrderItems> {
               },
             ),
           ),
-          // if (_expanded)
           AnimatedContainer(
             duration: const Duration(milliseconds: 350),
             padding: const EdgeInsets.symmetric(
               horizontal: 15,
               vertical: 4,
             ),
-            height: _expanded
-                ? widget.order.products.length * 28
-                : 5,
-            child: ListView(
-              children: widget.order.products
-                  .map(
-                    (prod) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          prod.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '${prod.quantity}x ₹${prod.price}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
+            height: _expanded ? widget.order.products.length * rowHeight : 0,
+            child: ListView.builder(
+              itemCount: widget.order.products.length,
+              itemBuilder: (ctx, i) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.order.products[i].title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                  )
-                  .toList(),
+                  ),
+                  Text(
+                    '${widget.order.products[i].quantity}x ₹${widget.order.products[i].price}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
