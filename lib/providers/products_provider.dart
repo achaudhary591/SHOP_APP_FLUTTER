@@ -203,7 +203,7 @@ class ProductsProvider with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
-  void updateUser(String token, String id) {
+  void updateUser(String? token, String? id) {
     userId = id;
     authToken = token;
     notifyListeners();

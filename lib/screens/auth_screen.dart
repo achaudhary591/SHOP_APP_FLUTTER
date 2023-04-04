@@ -254,7 +254,7 @@ class _AuthCardState extends State<AuthCard> {
                   Center(
                     child: LoadingAnimationWidget.dotsTriangle(
                       color: Colors.orange,
-                      size: 100,
+                      size: 50,
                     ),
                   )
                 else

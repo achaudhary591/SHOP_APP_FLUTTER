@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
           update: (ctx, auth, previousProductsProvider) =>
               previousProductsProvider
                 ?..updateUser(
-                  auth.token!,
-                  auth.userId!,
+                  auth.token,
+                  auth.userId,
                 ),
         ),
         ChangeNotifierProvider(
