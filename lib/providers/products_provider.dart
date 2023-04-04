@@ -6,7 +6,7 @@ import '../models/models.dart';
 
 class ProductsProvider with ChangeNotifier {
   List<Product> _items = [
-    Product(
+    /*Product(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -190,7 +190,7 @@ class ProductsProvider with ChangeNotifier {
       imageUrl:
           'https://wiki.ece.cmu.edu/ddl/images/thumb/Team5AutoCanOpenerTop.JPG/300px-Team5AutoCanOpenerTop.JPG',
       isFavorite: false,
-    ),
+    ),*/
   ];
 
   final _showFavouritesOnly = false;
