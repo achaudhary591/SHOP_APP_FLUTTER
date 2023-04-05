@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/helpers/custom_routes.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'providers/providers.dart';
 import 'screens/screens.dart';
@@ -46,13 +47,17 @@ class MyApp extends StatelessWidget {
           title: 'Shop App',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            // useMaterial3: true,
+            useMaterial3: true,
             colorScheme: ColorScheme.fromSwatch(
               primarySwatch: Colors.purple,
             ).copyWith(
               secondary: Colors.deepOrange,
             ),
             fontFamily: 'Lato',
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CustomPageTransitionBuilder(),
+              TargetPlatform.iOS: CustomPageTransitionBuilder(),
+            }),
           ),
           home: auth.isAuth
               ? ProductOverviewScreen()
