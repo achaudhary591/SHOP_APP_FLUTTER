@@ -34,39 +34,40 @@ class _OrdersScreenState extends State<OrdersScreen> {
         title: const Text('Your Orders'),
       ),
       drawer: const AppDrawer(),
-      body: FutureBuilder(
-        future: _ordersFuture,
-        builder: (ctx, dataSnapshot) {
-          if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: LoadingAnimationWidget.dotsTriangle(
-                color: Colors.orange,
-                size: 100,
-              ),
-            );
-          } else {
-            if (dataSnapshot.error != null && dataSnapshot.hasData == true) {
-              return const Center(
-                child: Text('An error occurred!'),
-              );
-            }
-            else if(dataSnapshot.data == null){
-              return const Center(
-                child: Text('Add some orders'),
-              );
-            }
-            else {
-              return Consumer<Orders>(
-                builder: (ctx, orderData, child) => ListView.builder(
-                        itemCount: orderData.orders.length,
-                        itemBuilder: (ctx, i) => OrderItems(
-                          orderData.orders[i],
-                        ),
+      body: Consumer<Orders>(
+        builder: (ctx, orderData, children) => orderData.orders.isEmpty
+            ? const Center(
+                child: Text("Add some Orders!"),
+              )
+            : FutureBuilder(
+                future: _ordersFuture,
+                builder: (ctx, dataSnapshot) {
+                  if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: LoadingAnimationWidget.dotsTriangle(
+                        color: Colors.orange,
+                        size: 100,
                       ),
-              );
-            }
-          }
-        },
+                    );
+                  } else {
+                    if (dataSnapshot.error != null &&
+                        dataSnapshot.hasData == true) {
+                      return const Center(
+                        child: Text('An error occurred!'),
+                      );
+                    } else {
+                      return Consumer<Orders>(
+                        builder: (ctx, orderData, child) => ListView.builder(
+                          itemCount: orderData.orders.length,
+                          itemBuilder: (ctx, i) => OrderItems(
+                            orderData.orders[i],
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                },
+              ),
       ),
     );
   }
