@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/orders.dart' show Orders;
 import '../widgets/widgets.dart';
@@ -37,8 +38,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
         future: _ordersFuture,
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: LoadingAnimationWidget.dotsTriangle(
+                color: Colors.orange,
+                size: 100,
+              ),
             );
           } else {
             if (dataSnapshot.error != null && dataSnapshot.hasData == true) {
@@ -46,7 +50,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 child: Text('An error occurred!'),
               );
             }
-            else if(dataSnapshot.data == false){
+            else if(dataSnapshot.data == null){
               return const Center(
                 child: Text('Add some orders'),
               );
